@@ -8,16 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUsuarioRequest {
+public class UsuarioRequest {
 
     @NotEmpty
     @NotNull
@@ -55,7 +52,7 @@ public class CreateUsuarioRequest {
 
     @NotEmpty
     @NotNull
-    private List<String> intereses;
+    private String intereses;
 
     @NotEmpty
     @NotNull

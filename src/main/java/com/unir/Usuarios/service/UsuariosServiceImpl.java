@@ -2,11 +2,11 @@ package com.unir.Usuarios.service;
 
 import com.unir.Usuarios.data.UsuariosRepository;
 import com.unir.Usuarios.model.db.Usuario;
-import com.unir.Usuarios.model.db.UsuarioDto;
-import com.unir.Usuarios.model.request.CreateUsuarioRequest;
+import com.unir.Usuarios.model.request.UsuarioRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import java.util.List;
@@ -43,8 +43,8 @@ public class UsuariosServiceImpl implements UsuariosService{
     }
 
     @Override
-    public Usuario createUsuario(CreateUsuarioRequest request) throws Exception {
-        //request.setContrasena(hashContrasena(request.getContrasena()));
+    public Usuario createUsuario(UsuarioRequest request) throws Exception {
+        request.setContrasena(new BCryptPasswordEncoder().encode(request.getContrasena()));
         if (!request.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new Exception("No es correcto el correo");
         }
@@ -55,7 +55,8 @@ public class UsuariosServiceImpl implements UsuariosService{
     }
 
     @Override
-    public Usuario updateUsuario(String usuarioId, UsuarioDto body) throws Exception {
+    public Usuario updateUsuario(String usuarioId, UsuarioRequest body) throws Exception {
+        body.setContrasena(new BCryptPasswordEncoder().encode(body.getContrasena()));
         if (!body.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new Exception("No es correcto el correo");
         }
