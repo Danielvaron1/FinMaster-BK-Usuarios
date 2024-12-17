@@ -20,9 +20,10 @@ public class Notificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "usuarioId", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "usuario1_id")
     @NotNull
-    private Long usuarioId;
+    private Usuario usuarioId;
 
     @Column(name = "tipoId", nullable = false)
     @NotNull
@@ -36,7 +37,11 @@ public class Notificacion {
     @NotNull
     private String fecha;
 
-    public Notificacion(Long usuarioId, Long tipoId, String tipo) {
+    @Column(name = "leido", nullable = false)
+    @NotNull
+    private Boolean leido;
+
+    public Notificacion(Usuario usuarioId, Long tipoId, String tipo) {
         this.usuarioId = usuarioId;
         this.tipoId = tipoId;
         this.tipo = tipo;
@@ -45,5 +50,6 @@ public class Notificacion {
         String formattedDate = now.format(formatter);
         System.out.println(formattedDate);
         this.fecha = formattedDate;
+        this.leido = false;
     }
 }

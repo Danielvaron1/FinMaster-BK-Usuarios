@@ -1,6 +1,7 @@
 package com.unir.Usuarios.service;
 
 import com.unir.Usuarios.model.db.Usuario;
+import com.unir.Usuarios.model.request.LoginRequest;
 import com.unir.Usuarios.model.request.UsuarioRequest;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface UsuariosService {
     Usuario getUsuario(String usuarioId, String correo, String telefono) throws Exception;
 
     Usuario createUsuario(UsuarioRequest request) throws Exception;
+
+    Usuario authenticate(LoginRequest request) throws Exception;
 
     Usuario updateUsuario(String usuarioId, UsuarioRequest body) throws Exception;
 

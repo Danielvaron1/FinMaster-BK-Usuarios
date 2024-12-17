@@ -2,11 +2,15 @@ package com.unir.Usuarios.service;
 
 import com.unir.Usuarios.data.UsuariosRepository;
 import com.unir.Usuarios.model.db.Usuario;
+import com.unir.Usuarios.model.request.LoginRequest;
 import com.unir.Usuarios.model.request.UsuarioRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import java.util.List;
@@ -15,8 +19,29 @@ import java.util.List;
 @Slf4j
 public class UsuariosServiceImpl implements UsuariosService{
 
-    @Autowired
-    private UsuariosRepository repository;
+    private final UsuariosRepository repository;
+
+    private final AuthenticationManager authenticationManager;
+
+
+    public UsuariosServiceImpl(
+            UsuariosRepository userRepository,
+            AuthenticationManager authenticationManager
+    ) {
+        this.authenticationManager = authenticationManager;
+        this.repository = userRepository;
+    }
+
+    public Usuario authenticate(LoginRequest input) throws Exception {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        input.getCorreo(),
+                        input.getContrasena()
+                )
+        );
+
+        return repository.getByCorreo(input.getCorreo());
+    }
 
     @Override
     public List<Usuario> getUsuarios(String ciudad) {

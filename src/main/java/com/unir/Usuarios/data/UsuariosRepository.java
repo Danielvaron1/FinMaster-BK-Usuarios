@@ -20,12 +20,14 @@ public class UsuariosRepository {
         return repository.findById(id).orElse(null);
     }
 
-    public Usuario getByCorreo(String correo) {
-        return repository.findByCorreo(correo).getFirst();
+    public Usuario getByCorreo(String correo) throws Exception {
+        return repository.findByCorreo(correo)
+                .orElseThrow(() -> new Exception("Correo not found"));
     }
 
-    public Usuario getByTelefono(String telefono) {
-        return repository.findByTelefono(telefono).getFirst();
+    public Usuario getByTelefono(String telefono) throws Exception {
+        return repository.findByTelefono(telefono)
+                .orElseThrow(() -> new Exception("Telefono not found"));
     }
 
     public List<Usuario> getByCiudad(String ciudad) {

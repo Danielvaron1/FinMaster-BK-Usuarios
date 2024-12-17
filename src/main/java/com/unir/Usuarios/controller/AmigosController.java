@@ -22,17 +22,36 @@ public class AmigosController {
     private final AmigosService service;
 
     @PreAuthorize("isAuthenticated()")
+    @PostMapping
+    public ResponseEntity<Amigo> createAmigo(@RequestBody Map<String, String> request) {
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.createAmigo(request.get("usuario1"), request.get("usuario2")));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/amigo")
+    public ResponseEntity acceptAmigo(@RequestParam String usuario1,
+                                      @RequestParam String usuario2){
+        try{
+            service.acceptAmigo(usuario1, usuario2);
+            return ResponseEntity.ok().build();
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<List<Amigo>> getAmigos(@RequestParam String usuario,
                                                 @RequestParam(required= false) String estado){
-        System.out.println("Amigos: "+estado);
         try{
             if(estado == null){
-                System.out.println("Amigos: "+estado);
-                System.out.println("Amigos: "+service.getAmigos(usuario));
                 return ResponseEntity.ok(service.getAmigos(usuario));
             } else{
-                System.out.println("Amigos: "+estado);
                 return ResponseEntity.ok(service.getAmigos(usuario, estado));
             }
         } catch (Exception e) {
@@ -46,29 +65,6 @@ public class AmigosController {
                                           @RequestParam String usuario2){
         try{
             return ResponseEntity.ok(service.getAmigo(usuario1, usuario2));
-
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping
-    public ResponseEntity<Amigo> createAmigo(@RequestBody Map<String, String> request) {
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.createAmigo(request.get("usuario1"), request.get("usuario2")));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PutMapping("/amigo")
-    public ResponseEntity acceptAmigo(@RequestParam String usuario1,
-                                          @RequestParam String usuario2){
-        try{
-            service.acceptAmigo(usuario1, usuario2);
-            return ResponseEntity.ok().build();
 
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

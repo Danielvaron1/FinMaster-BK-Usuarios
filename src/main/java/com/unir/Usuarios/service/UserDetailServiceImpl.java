@@ -20,7 +20,12 @@ public class UserDetailServiceImpl implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String correo){
-        Usuario usuario = userRepository.getByCorreo(correo);
+        Usuario usuario = null;
+        try {
+            usuario = userRepository.getByCorreo(correo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return new User(usuario.getCorreo(), usuario.getContrasena(), authorities);
