@@ -22,10 +22,6 @@ public class UsuarioRequest {
 
     @NotEmpty
     @NotNull
-    private String apellido;
-
-    @NotEmpty
-    @NotNull
     @Email
     private String correo;
 

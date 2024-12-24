@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -29,33 +28,27 @@ public class Usuario implements UserDetails {
     private Long id;
 
     @Column(name = "nombre", nullable = false)
-    @NotNull
     private String nombre;
 
     @Column(name = "correo", unique = true, nullable = false)
-    @NotNull
     @Email
     private String correo;
 
     @Column(name = "fechaNacimiento", nullable = false)
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
 
     @Column(name = "telefono", unique = true, nullable = false)
-    @NotNull
     private String telefono;
 
+    @JsonIgnore
     @Column(name = "contrasena", nullable = false)
-    @NotNull
     @Size(min = 8, max = 128)
     private String contrasena;
 
     @Column(name = "descripcion",length = 1000)
-    @NotNull
     private String descripcion;
 
-    @NotNull
     @Column(name = "ciudad", nullable = false)
     private String ciudad;
 
@@ -72,37 +65,45 @@ public class Usuario implements UserDetails {
             orphanRemoval = true
     )
     @JsonIgnore
-    private Set<Amigo> amigos;
+    @Transient
+    private transient Set<Amigo> amigos;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
+    @JsonIgnore
     public String getPassword() {
         return contrasena;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return correo;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

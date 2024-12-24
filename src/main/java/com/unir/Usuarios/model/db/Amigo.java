@@ -2,7 +2,6 @@ package com.unir.Usuarios.model.db;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "amigos", uniqueConstraints = @UniqueConstraint(columnNames = {"usuario1_id", "usuario2_id"}))
@@ -19,16 +18,13 @@ public class Amigo {
 
     @ManyToOne
     @JoinColumn(name = "usuario1_id")
-    @NotNull
     private Usuario usuario1;
 
     @ManyToOne
     @JoinColumn(name = "usuario2_id")
-    @NotNull
     private Usuario usuario2;
 
     @Column(name = "estado", nullable = false)
-    @NotNull
     private String estado;
 
     public Amigo(Usuario usuario1, Usuario usuario2, String estado) {
