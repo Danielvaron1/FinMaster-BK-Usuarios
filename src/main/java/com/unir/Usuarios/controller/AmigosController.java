@@ -64,8 +64,11 @@ public class AmigosController {
     public ResponseEntity<Amigo> getAmigo(@RequestParam String usuario1,
                                           @RequestParam String usuario2){
         try{
-            return ResponseEntity.ok(service.getAmigo(usuario1, usuario2));
-
+            Amigo amigo= service.getAmigo(usuario1, usuario2);
+            if(amigo == null){
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(amigo);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

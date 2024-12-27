@@ -56,14 +56,20 @@ public class UsuariosServiceImpl implements UsuariosService{
 
     @Override
     public Usuario getUsuario(String usuarioId, String correo, String telefono) throws Exception {
+        Usuario newUsuario = null;
         if (StringUtils.hasLength(usuarioId)) {
-            return repository.getById(Long.valueOf(usuarioId));
+            newUsuario = repository.getById(Long.valueOf(usuarioId));
         } else if (StringUtils.hasLength(correo)) {
-            return repository.getByCorreo(correo);
+            newUsuario = repository.getByCorreo(correo);
         } else if (StringUtils.hasLength(telefono)) {
-            return repository.getByTelefono(telefono);
+            newUsuario = repository.getByTelefono(telefono);
         } else {
             throw new Exception("No se encontró un usuario con los datos proporcionados");
+        }
+        if(newUsuario==null){
+            throw new Exception("No se encontró un usuario con los datos proporcionados");
+        } else{
+            return newUsuario;
         }
     }
 

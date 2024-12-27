@@ -23,9 +23,14 @@ public class AmigosService {
     private AmigosJpaRepository repository;
 
     public Amigo createAmigo(String usuario1, String usuario2) throws Exception {
-        Usuario user1 = usuariosService.getUsuario("",usuario1,"");
-        Usuario user2 = usuariosService.getUsuario("",usuario2,"");
+        Usuario user1 = usuariosService.getUsuario(usuario1,"","");
+        Usuario user2 = usuariosService.getUsuario(usuario2,"","");
+        if(user1 == null || user2 == null){
+            throw new Exception("No se encontro los usuarios.");
+        }
         Amigo amigo = new Amigo(user1, user2, "pendiente");
+        Amigo amigo2 = new Amigo(user2, user1, "solicitud");
+        repository.save(amigo2);
         return repository.save(amigo);
     }
 
@@ -48,22 +53,25 @@ public class AmigosService {
     }
 
     public List<Amigo> getAmigos(String usuario) throws Exception {
-        Usuario user = usuariosService.getUsuario("",usuario,"");
+        Usuario user = usuariosService.getUsuario(usuario,"","");
         Set<Amigo> list = new HashSet<>();
         repository.findByUsuario1(user).forEach(amigo -> list.add((Amigo) amigo));
+        if(list.isEmpty()){
+            throw new Exception("No hay amigos registrados.");
+        }
         return new ArrayList<>(list);
     }
 
     public List<Amigo> getAmigos(String usuario, String estado) throws Exception {
-        Usuario user = usuariosService.getUsuario("",usuario,"");
+        Usuario user = usuariosService.getUsuario(usuario,"","");
         List<Amigo> list = new ArrayList<>();
         repository.findByUsuario1AndEstado(user, estado).forEach(amigo -> list.add((Amigo) amigo));
         return list;
     }
 
     public Amigo getAmigo(String usuario1, String usuario2) throws Exception {
-        Usuario user1 = usuariosService.getUsuario("",usuario1,"");
-        Usuario user2 = usuariosService.getUsuario("",usuario2,"");
+        Usuario user1 = usuariosService.getUsuario(usuario1,"","");
+        Usuario user2 = usuariosService.getUsuario(usuario2,"","");
         return repository.findByUsuario1AndUsuario2(user1, user2);
     }
 
