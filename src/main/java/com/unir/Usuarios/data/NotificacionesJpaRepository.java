@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface NotificacionesJpaRepository extends JpaRepository<Notificacion, Long>, JpaSpecificationExecutor<Notificacion> {
-    List<Notificacion> findByUsuarioIdOrderByFecha(Usuario usuarioId);
+    List<Notificacion> findByUsuarioIdOrderByFechaDesc(Usuario usuarioId);
 }

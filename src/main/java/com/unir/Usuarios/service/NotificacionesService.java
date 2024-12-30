@@ -19,15 +19,34 @@ public class NotificacionesService {
     @Autowired
     private NotificacionesJpaRepository repository;
 
-    public Notificacion createNotificacion(Long usuarioId, Long tipoId, String tipo) throws Exception {
-        Usuario usuario = usuariosService.getUsuario(String.valueOf(usuarioId),"","");
+    public Notificacion createNotificacion(String usuarioId, Long tipoId, String tipo) throws Exception {
+        Usuario usuario = usuariosService.getUsuario(usuarioId,"","");
+        if(usuario == null){
+            throw new Exception("No se encontro el usuario.");
+        }
         Notificacion notificacion = new Notificacion(usuario, tipoId, tipo);
         return repository.save(notificacion);
     }
 
-    public List<Notificacion> getNotificaciones(Long usuarioId) throws Exception {
-        Usuario usuario = usuariosService.getUsuario(String.valueOf(usuarioId),"","");
-        return repository.findByUsuarioIdOrderByFecha(usuario);
+    public List<Notificacion> getNotificaciones(String usuarioId) throws Exception {
+        Usuario usuario = usuariosService.getUsuario(usuarioId,"","");
+        if(usuario == null){
+            throw new Exception("No se encontro el usuario.");
+        }
+        return repository.findByUsuarioIdOrderByFechaDesc(usuario);
+    }
+
+    public List<Notificacion> readNotificaciones(String usuarioId) throws Exception {
+        Usuario usuario = usuariosService.getUsuario(usuarioId,"","");
+        if(usuario == null){
+            throw new Exception("No se encontro el usuario.");
+        }
+        List<Notificacion> notificaciones =repository.findByUsuarioIdOrderByFechaDesc(usuario);
+        for (Notificacion notificacion : notificaciones) {
+            notificacion.setLeido(true);
+            repository.save(notificacion);
+        }
+        return notificaciones;
     }
 
     public void deleteNotificacion(Long id) throws Exception {

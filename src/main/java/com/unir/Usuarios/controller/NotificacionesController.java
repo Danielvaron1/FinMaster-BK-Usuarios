@@ -21,14 +21,32 @@ public class NotificacionesController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<List<Notificacion>> getNotificaciones(@RequestParam Long usuarioId) throws Exception {
-        return ResponseEntity.ok(service.getNotificaciones(usuarioId));
+    public ResponseEntity<List<Notificacion>> getNotificaciones(@RequestParam String usuarioId) {
+        try{
+            return ResponseEntity.ok(service.getNotificaciones(usuarioId));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping
+    public ResponseEntity<List<Notificacion>> readNotificaciones(@RequestParam String usuarioId) {
+        try{
+            return ResponseEntity.ok(service.readNotificaciones(usuarioId));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<Notificacion> createNotificacion(@RequestParam Long usuarioId,@RequestParam Long tipoId,@RequestParam String tipo) throws Exception {
-        return ResponseEntity.ok(service.createNotificacion(usuarioId,tipoId,tipo));
+    public ResponseEntity<Notificacion> createNotificacion(@RequestParam String usuarioId,@RequestParam Long tipoId,@RequestParam String tipo) {
+        try{
+            return ResponseEntity.ok(service.createNotificacion(usuarioId,tipoId,tipo));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PreAuthorize("isAuthenticated()")

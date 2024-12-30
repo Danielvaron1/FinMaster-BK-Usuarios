@@ -1,5 +1,6 @@
 package com.unir.Usuarios.model.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Notificacion {
 
     @ManyToOne
     @JoinColumn(name = "usuario1_id")
+    @JsonIgnore
     private Usuario usuarioId;
 
     @Column(name = "tipoId", nullable = false)

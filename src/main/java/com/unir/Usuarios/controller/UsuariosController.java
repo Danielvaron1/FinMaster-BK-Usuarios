@@ -4,22 +4,16 @@ import com.unir.Usuarios.model.db.Usuario;
 import com.unir.Usuarios.model.request.LoginRequest;
 import com.unir.Usuarios.model.request.LoginResponse;
 import com.unir.Usuarios.model.request.UsuarioRequest;
+import com.unir.Usuarios.model.request.UsuarioRequestPwd;
 import com.unir.Usuarios.service.UsuariosService;
 import com.unir.Usuarios.token.JwtService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -81,6 +75,17 @@ public class UsuariosController {
     public ResponseEntity<Usuario> updateUsuario(@PathVariable String usuarioId, @RequestBody UsuarioRequest body) {
         try{
             return ResponseEntity.ok(service.updateUsuario(usuarioId, body));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/usuario")
+    public ResponseEntity<Void> updatePasswordUsuario(@RequestBody UsuarioRequestPwd body) {
+        try{
+            service.updatePwdUsuario(body);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

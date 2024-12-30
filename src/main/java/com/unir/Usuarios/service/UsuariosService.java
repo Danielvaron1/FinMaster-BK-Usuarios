@@ -3,6 +3,7 @@ package com.unir.Usuarios.service;
 import com.unir.Usuarios.model.db.Usuario;
 import com.unir.Usuarios.model.request.LoginRequest;
 import com.unir.Usuarios.model.request.UsuarioRequest;
+import com.unir.Usuarios.model.request.UsuarioRequestPwd;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UsuariosService {
     Usuario updateUsuario(String usuarioId, UsuarioRequest body) throws Exception;
 
     void removeUsuario(String usuarioId) throws Exception;
+
+    void updatePwdUsuario(UsuarioRequestPwd body) throws Exception;
 }

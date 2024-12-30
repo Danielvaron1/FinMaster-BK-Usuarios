@@ -34,8 +34,7 @@ public class UsuarioRequest {
     @NotNull
     private String telefono;
 
-    @NotEmpty
-    @NotNull
+
     private String contrasena;
 
     @NotEmpty
