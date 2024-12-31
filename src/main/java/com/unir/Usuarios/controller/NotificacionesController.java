@@ -41,9 +41,9 @@ public class NotificacionesController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<Notificacion> createNotificacion(@RequestParam String usuarioId,@RequestParam Long tipoId,@RequestParam String tipo) {
+    public ResponseEntity<Notificacion> createNotificacion(@RequestParam String usuarioId,@RequestParam Long tipoId,@RequestParam String tipo,@RequestParam String nombre) {
         try{
-            return ResponseEntity.ok(service.createNotificacion(usuarioId,tipoId,tipo));
+            return ResponseEntity.ok(service.createNotificacion(usuarioId,tipoId,tipo,nombre));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }

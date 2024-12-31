@@ -19,12 +19,12 @@ public class NotificacionesService {
     @Autowired
     private NotificacionesJpaRepository repository;
 
-    public Notificacion createNotificacion(String usuarioId, Long tipoId, String tipo) throws Exception {
+    public Notificacion createNotificacion(String usuarioId, Long tipoId, String tipo, String nombre) throws Exception {
         Usuario usuario = usuariosService.getUsuario(usuarioId,"","");
         if(usuario == null){
             throw new Exception("No se encontro el usuario.");
         }
-        Notificacion notificacion = new Notificacion(usuario, tipoId, tipo);
+        Notificacion notificacion = new Notificacion(usuario, tipoId, tipo,nombre);
         return repository.save(notificacion);
     }
 

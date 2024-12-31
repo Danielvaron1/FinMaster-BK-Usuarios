@@ -34,13 +34,17 @@ public class Notificacion {
     @Column(name = "fecha", nullable = false)
     private String fecha;
 
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+
     @Column(name = "leido", nullable = false)
     private Boolean leido;
 
-    public Notificacion(Usuario usuarioId, Long tipoId, String tipo) {
+    public Notificacion(Usuario usuarioId, Long tipoId, String tipo,String nombre) {
         this.usuarioId = usuarioId;
         this.tipoId = tipoId;
         this.tipo = tipo;
+        this.nombre=nombre;
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.fecha = now.format(formatter);
