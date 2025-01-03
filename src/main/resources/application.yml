@@ -3,9 +3,9 @@ spring:
   application:
     name: usuarios
   datasource:
-    url: jdbc:mysql://localhost:3306/parchando?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: admin
+    url: jdbc:mysql://mysql-parchando-usuarios.ch9cxccnfz7t.us-east-1.rds.amazonaws.com:3306/parchando?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    username: admin
+    password: AdminUsuarios
   jpa:
     show-sql: true
     hibernate:
@@ -17,6 +17,10 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+
+##jdbc:mysql://localhost:3306/parchando?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+##root
+##admin
 
 ## Configuracion de Instancia
 server:
