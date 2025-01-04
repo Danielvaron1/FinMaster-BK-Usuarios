@@ -3,7 +3,7 @@ spring:
   application:
     name: usuarios
   datasource:
-    url: jdbc:mysql://mysql-parchando-usuarios.ch9cxccnfz7t.us-east-1.rds.amazonaws.com:3306/parchando?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://parchando-usuarios.cxwy6i4quba8.us-east-1.rds.amazonaws.com:3306/parchando?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
     username: admin
     password: AdminUsuarios
   jpa:
