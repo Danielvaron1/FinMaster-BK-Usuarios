@@ -1,4 +1,8 @@
-#
+#docker build -t daniel1varon/parchando-usuarios .
+#docker run -p 8088:8088 daniel1varon/parchando-usuarios
+
+
+
 # Build del proyecto (Multi-Stage)
 # --------------------------------
 #
