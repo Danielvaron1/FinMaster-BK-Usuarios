@@ -67,4 +67,13 @@ public class ConversacionesService {
             return conversacion;
         }
     }
+
+    public Conversaciones getConversacion(String id) throws Exception {
+        Conversaciones conversacion = repository.findById(Long.valueOf(id)).orElse(null);
+        if(conversacion == null){
+            throw new Exception("No se encontro la conversacion.");
+        }else{
+            return conversacion;
+        }
+    }
 }

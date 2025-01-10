@@ -50,7 +50,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://parchando-front.s3-website-us-east-1.amazonaws.com", "https://www.parchando.co"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
         configuration.setAllowCredentials(true);

@@ -40,6 +40,16 @@ public class ConversacionesController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/conversacion/{id}")
+    public ResponseEntity<Conversaciones> getConversacionId(@PathVariable String id) {
+        try{
+            return ResponseEntity.ok(service.getConversacion(id));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<Conversaciones> createConversacion(@RequestParam String usuario1, @RequestParam String usuario2, @RequestParam String nombre) {
         try{
